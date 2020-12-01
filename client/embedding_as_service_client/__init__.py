@@ -1,4 +1,3 @@
-from typing import Union, List, Optional
 import numpy as np
 import zmq
 import json
@@ -15,14 +14,7 @@ class EmbeddingClient(object):
         self.socket.connect("tcp://{}:{}".format(host, port))
         self.identity = "123"
 
-    def encode(
-        self,
-        texts: Union[List[str], List[List[str]]],
-        pooling: Optional[str] = None,
-        is_tokenized: bool = False,
-        batch_size: int = 256,
-        **kwargs
-    ) -> np.array:
+    def encode(self, texts, pooling=None, is_tokenized=False, batch_size=256, **kwargs):
         """
         Connects to server. Send compute request, poll for and print result to standard out.
         """
@@ -67,7 +59,7 @@ class EmbeddingClient(object):
         """
         return self.socket.recv()
 
-    def tokenize(self, texts: Union[List[str], str]) -> np.array:
+    def tokenize(self, texts):
         request_data = {"type": "tokenize", "texts": texts}
 
         self.send(json.dumps(request_data))
