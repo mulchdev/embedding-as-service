@@ -11,7 +11,7 @@ class EmbeddingClient(object):
     def __init__(self, host, port):
         self.zmq_context = zmq.Context()
         self.socket = self.zmq_context.socket(zmq.DEALER)
-        self.socket.connect(f'tcp://{host}:{port}')
+        self.socket.connect(f'tcp://{}:{}'.format(host, port))
         self.identity = '123'
 
     def encode(self,
